@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IEEE Cyber Clash - Stickman Showdown</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation with IEEE SB VIT Pune Branding -->
+  <div class="top-nav">
+    <div class="ieee-badge">
+      <div class="ieee-diamond-logo">
+        <svg viewBox="0 0 100 100" class="ieee-svg-logo">
+          <!-- IEEE Diamond -->
+          <polygon points="50,4 96,50 50,96 4,50" fill="none" stroke="#00B5E2" stroke-width="7"/>
+          <polygon points="50,14 86,50 50,86 14,50" fill="#00629B" opacity="0.3"/>
+          <!-- IEEE Hand Right Arrow & Wave symbols -->
+          <path d="M50 25 L50 75 M32 50 L68 50" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="50" cy="50" r="10" fill="#00B5E2"/>
+        </svg>
+      </div>
+      <div class="ieee-brand-col">
+        <div class="ieee-text">IEEE SB VIT PUNE</div>
+        <div class="ieee-sub">Vishwakarma Institute of Technology, Pune</div>
+      </div>
+      <a href="https://ieeesbvitpune.vercel.app/" target="_blank" rel="noopener noreferrer" class="tech-tag" title="Visit IEEE SB VIT Pune Website">
+        🌐 ieeesbvitpune.vercel.app ↗
+      </a>
+    </div>
+    <div class="sound-controls">
+      <button id="btn-open-leaderboard" class="nav-btn btn-highlight" title="View Tournament Leaderboard">
+        🏆 Leaderboard
+      </button>
+      <button id="btn-toggle-pip" class="nav-btn" title="Toggle Webcam Picture-in-Picture">
+        📷 Cam PiP
+      </button>
+      <button id="btn-sound-toggle" class="nav-btn" title="Toggle Sound FX">
+        <span id="sound-icon">🔊</span> Sound: <span id="sound-status">ON</span>
+      </button>
+      <button id="btn-fullscreen" class="nav-btn" title="Fullscreen Mode">
+        ⛶ Fullscreen
+      </button>
+    </div>
+  </div>
+
+  <main id="app-container">
+    <!-- ================= SCREEN 1: WELCOME & REGISTRATION ================= -->
+    <section id="screen-welcome" class="game-screen active">
+      <div class="hero-header">
+        <h1 class="main-title">CYBER CLASH</h1>
+        <div class="sub-title">Live Hand-Sign Stickman Combat • IEEE SB VIT Pune</div>
+      </div>
+
+      <div class="registration-panel glass-panel">
+        <div class="player-input-card p1-card">
+          <div class="player-tag tag-p1">CHALLENGER 1 (IEEE BLUE)</div>
+          <div class="input-group">
+            <label for="p1-name">Student Name</label>
+            <input type="text" id="p1-name" value="Rohan" maxlength="16" autocomplete="off">
+          </div>
+          <div class="input-group">
+            <label for="p1-dept">Department</label>
+            <select id="p1-dept">
+              <option value="Computer Engineering (CE)">Computer Engineering (CE)</option>
+              <option value="Information Technology (IT)">Information Technology (IT)</option>
+              <option value="Electronics & Telecommunication (E&TC)" selected>Electronics & Telecommunication (E&TC)</option>
+              <option value="AI & Data Science (AIDS)">AI & Data Science (AIDS)</option>
+              <option value="CSE - Artificial Intelligence">CSE - Artificial Intelligence</option>
+              <option value="CSE - AI & Machine Learning">CSE - AI & Machine Learning</option>
+              <option value="CSE - Data Science">CSE - Data Science</option>
+              <option value="CSE - IoT & Cyber Security with Blockchain">CSE - IoT & Cyber Security with Blockchain</option>
+              <option value="Computer Engg - Software Engineering">Computer Engg - Software Engineering</option>
+              <option value="Mechanical Engineering (ME)">Mechanical Engineering (ME)</option>
+              <option value="Chemical Engineering">Chemical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+              <option value="Instrumentation Engineering">Instrumentation Engineering</option>
+              <option value="Engineering, Science & Humanities (DESH)">Engineering, Science & Humanities (DESH)</option>
+              <option value="IEEE SB VIT Pune Member">IEEE SB VIT Pune Member</option>
+            </select>
+          </div>
+          <div class="player-zone-hint">📍 Position: STAND ON LEFT OF WEBCAM</div>
+        </div>
+
+        <div class="vs-divider">
+          <div class="vs-glow">VS</div>
+          <div class="rules-summary-box">
+            <div class="rule-title">⚡ COMBAT RULES</div>
+            <div class="rule-item">🏆 First to 5 Clean Hits Wins</div>
+            <div class="rule-item">✋ Block negates light strikes</div>
+            <div class="rule-item">✌️ Heavy attacks break guard</div>
+            <div class="rule-item">🤟 Super move ignores block</div>
+          </div>
+        </div>
+
+        <div class="player-input-card p2-card">
+          <div class="player-tag tag-p2">CHALLENGER 2 (IEEE ORANGE)</div>
+          <div class="input-group">
+            <label for="p2-name">Student Name</label>
+            <input type="text" id="p2-name" value="Tanvi" maxlength="16" autocomplete="off">
+          </div>
+          <div class="input-group">
+            <label for="p2-dept">Department</label>
+            <select id="p2-dept">
+              <option value="Computer Engineering (CE)" selected>Computer Engineering (CE)</option>
+              <option value="Information Technology (IT)">Information Technology (IT)</option>
+              <option value="Electronics & Telecommunication (E&TC)">Electronics & Telecommunication (E&TC)</option>
+              <option value="AI & Data Science (AIDS)">AI & Data Science (AIDS)</option>
+              <option value="CSE - Artificial Intelligence">CSE - Artificial Intelligence</option>
+              <option value="CSE - AI & Machine Learning">CSE - AI & Machine Learning</option>
+              <option value="CSE - Data Science">CSE - Data Science</option>
+              <option value="CSE - IoT & Cyber Security with Blockchain">CSE - IoT & Cyber Security with Blockchain</option>
+              <option value="Computer Engg - Software Engineering">Computer Engg - Software Engineering</option>
+              <option value="Mechanical Engineering (ME)">Mechanical Engineering (ME)</option>
+              <option value="Chemical Engineering">Chemical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+              <option value="Instrumentation Engineering">Instrumentation Engineering</option>
+              <option value="Engineering, Science & Humanities (DESH)">Engineering, Science & Humanities (DESH)</option>
+              <option value="IEEE SB VIT Pune Member">IEEE SB VIT Pune Member</option>
+            </select>
+          </div>
+          <div class="player-zone-hint">📍 Position: STAND ON RIGHT OF WEBCAM</div>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button id="btn-to-calibration" class="btn-primary">
+          📷 Proceed to Calibration & Camera →
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 2: DUAL-PLAYER WEBCAM CALIBRATION ================= -->
+    <section id="screen-calibration" class="game-screen">
+      <div class="section-title-bar">
+        <h2>WEBCAM HAND CALIBRATION</h2>
+        <p>Stand 1 to 1.5 m from the screen. Hold up ONE hand in your zone to begin countdown!</p>
+      </div>
+
+      <div class="calibration-container glass-panel">
+        <div class="calib-status-row">
+          <div class="calib-zone-info p1-zone-info">
+            <span class="calib-zone-label">P1 ZONE (LEFT)</span>
+            <div id="calib-p1-status" class="calib-status-badge status-waiting">Show hand in Left Zone...</div>
+          </div>
+          <div class="calib-center-divider"></div>
+          <div class="calib-zone-info p2-zone-info">
+            <span class="calib-zone-label">P2 ZONE (RIGHT)</span>
+            <div id="calib-p2-status" class="calib-status-badge status-waiting">Show hand in Right Zone...</div>
+          </div>
+        </div>
+
+        <div class="calib-canvas-wrap">
+          <canvas id="calibration-canvas" width="640" height="480"></canvas>
+          <div id="calib-countdown-overlay" class="calib-countdown-overlay">3</div>
+        </div>
+
+        <div class="calib-tips-bar">
+          <span>💡 Tip: Face your palm towards the camera in good lighting. Press <strong>[D]</strong> anytime for debug overlay.</span>
+        </div>
+      </div>
+
+      <div class="action-bar-duel">
+        <button id="btn-force-start-calib" class="btn-primary">
+          ▶️ Ready / Start Match (Space) →
+        </button>
+        <button id="btn-skip-calibration" class="btn-secondary">
+          ⚡ Skip Calibration (Keyboard Mode) →
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 3: WEAPON ROULETTE / SLOT MACHINE ================= -->
+    <section id="screen-roulette" class="game-screen">
+      <div class="section-title-bar">
+        <h2>ARSENAL ROULETTE</h2>
+        <p>Slot-machine reveal! Each challenger has 1 strategic re-roll.</p>
+      </div>
+
+      <div class="dual-roulette-grid">
+        <!-- P1 Roulette Card -->
+        <div class="roulette-card p1-roulette glass-panel">
+          <div class="roulette-card-header">
+            <span class="loadout-tag p1-tag">CHALLENGER 1</span>
+            <div class="roulette-player-name" id="roulette-p1-name">Rohan</div>
+            <div class="roulette-player-dept" id="roulette-p1-dept">E&TC Engineering</div>
+          </div>
+          <div class="roulette-spin-window">
+            <div class="roulette-weapon-icon" id="p1-weapon-icon">🗡️</div>
+            <div class="roulette-weapon-title" id="p1-weapon-title">PLASMA KATANA</div>
+            <div class="roulette-mod-badge" id="p1-mod-badge">⚡ Ion Overclock</div>
+            <div class="roulette-special-move" id="p1-special-move">Super: Sonic Blade Dash</div>
+          </div>
+          <button id="btn-p1-reroll" class="btn-reroll-spin" title="Reroll Challenger 1 weapon">🎲 Re-roll (1)</button>
+        </div>
+
+        <div class="roulette-vs-center">
+          <div class="vs-glow-large">VS</div>
+        </div>
+
+        <!-- P2 Roulette Card -->
+        <div class="roulette-card p2-roulette glass-panel">
+          <div class="roulette-card-header">
+            <span class="loadout-tag p2-tag">CHALLENGER 2</span>
+            <div class="roulette-player-name" id="roulette-p2-name">Tanvi</div>
+            <div class="roulette-player-dept" id="roulette-p2-dept">Computer Engineering</div>
+          </div>
+          <div class="roulette-spin-window">
+            <div class="roulette-weapon-icon" id="p2-weapon-icon">🔨</div>
+            <div class="roulette-weapon-title" id="p2-weapon-title">TESLA HAMMER</div>
+            <div class="roulette-mod-badge" id="p2-mod-badge">🔥 Superheated Plasma</div>
+            <div class="roulette-special-move" id="p2-special-move">Super: Giga-Volt Slam</div>
+          </div>
+          <button id="btn-p2-reroll" class="btn-reroll-spin" title="Reroll Challenger 2 weapon">🎲 Re-roll (1)</button>
+        </div>
+      </div>
+
+      <div class="action-bar-duel">
+        <button id="btn-start-fight" class="btn-primary btn-large-cta">⚔️ Enter The Clash →</button>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 4: THE BATTLE ARENA ================= -->
+    <section id="screen-arena" class="game-screen">
+      <!-- Arena Top HUD (5 Hit Pips & Overdrive Special Meter) -->
+      <div class="battle-hud">
+        <!-- Player 1 HUD -->
+        <div class="hud-player p1-hud">
+          <div class="hud-info">
+            <span class="hud-name" id="hud-p1-name">Rohan</span>
+            <span class="hud-dept-mini" id="hud-p1-dept">E&TC</span>
+            <span class="hud-weapon" id="hud-p1-weapon">Plasma Katana</span>
+          </div>
+          <!-- 5 Hit Pips -->
+          <div class="hit-pips-container">
+            <span class="pips-label">STAMINA:</span>
+            <div class="hit-pips-row" id="p1-pips">
+              <div class="hit-pip"></div>
+              <div class="hit-pip"></div>
+              <div class="hit-pip"></div>
+              <div class="hit-pip"></div>
+              <div class="hit-pip"></div>
+            </div>
+          </div>
+          <!-- Special Overdrive Meter -->
+          <div class="hud-special-bar">
+            <div class="special-label">OVERDRIVE [🤟]</div>
+            <div class="special-fill" id="p1-special-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Central Telemetry & Mode Tag -->
+        <div class="hud-center">
+          <div class="first-to-5-tag">FIRST TO 5 CLEAN HITS</div>
+          <div class="match-mode-tag">IEEE SB VIT PUNE • BOOTH SHOWDOWN</div>
+        </div>
+
+        <!-- Player 2 HUD -->
+        <div class="hud-player p2-hud">
+          <div class="hud-info">
+            <span class="hud-weapon" id="hud-p2-weapon">Tesla Hammer</span>
+            <span class="hud-dept-mini" id="hud-p2-dept">CE</span>
+            <span class="hud-name" id="hud-p2-name">Tanvi</span>
+          </div>
+          <!-- 5 Hit Pips -->
+          <div class="hit-pips-container">
+            <span class="pips-label">STAMINA:</span>
+            <div class="hit-pips-row" id="p2-pips">
+              <div class="hit-pip"></div>
+              <div class="hit-pip"></div>
+              <div class="hit-pip"></div>
+              <div class="hit-pip"></div>
+              <div class="hit-pip"></div>
+            </div>
+          </div>
+          <!-- Special Overdrive Meter -->
+          <div class="hud-special-bar">
+            <div class="special-label">OVERDRIVE [🤟]</div>
+            <div class="special-fill" id="p2-special-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-time Move Telemetry Banner -->
+      <div id="combat-telemetry-strip" class="combat-telemetry-strip">
+        <div class="telemetry-fighter p1-move" id="p1-move-card">
+          <span class="fighter-tag p1-color" id="telemetry-p1-name">P1 ROHAN</span>
+          <span class="move-name" id="p1-move-text">READY FOR COMBAT</span>
+        </div>
+        <div class="telemetry-center-icon">⚔️</div>
+        <div class="telemetry-fighter p2-move" id="p2-move-card">
+          <span class="move-name" id="p2-move-text">READY FOR COMBAT</span>
+          <span class="fighter-tag p2-color" id="telemetry-p2-name">TANVI P2</span>
+        </div>
+      </div>
+
+      <!-- Hand Lost Alert Warnings -->
+      <div id="p1-hand-alert" class="hand-alert-banner alert-p1">Player 1: Show your hand!</div>
+      <div id="p2-hand-alert" class="hand-alert-banner alert-p2">Player 2: Show your hand!</div>
+
+      <!-- Action Ticker & Crowd Commentary -->
+      <div id="battle-announcer" class="battle-announcer">FIGHT!</div>
+
+      <!-- On-Screen Gesture Cheat Sheet HUD -->
+      <div class="arena-cheatsheets-row">
+        <!-- P1 Cheat Sheet -->
+        <div class="player-cheatsheet p1-cheatsheet" id="p1-cheatsheet">
+          <div class="cheatsheet-title">P1 SIGNS (LEFT)</div>
+          <div class="cheatsheet-signs">
+            <div class="sign-badge" data-sign="Closed_Fist" title="Light Attack [A]">✊ Light [A]</div>
+            <div class="sign-badge" data-sign="Victory" title="Heavy Attack [S]">✌️ Heavy [S]</div>
+            <div class="sign-badge" data-sign="Open_Palm" title="Block Guard [D]">✋ Block [D]</div>
+            <div class="sign-badge" data-sign="Pointing_Up" title="Move Forward [F]">☝️ Fwd [F]</div>
+            <div class="sign-badge" data-sign="Thumb_Up" title="Move Back [G]">👍 Back [G]</div>
+            <div class="sign-badge" data-sign="ILoveYou" title="Special Overdrive [H]">🤟 Super [H]</div>
+          </div>
+        </div>
+
+        <!-- P2 Cheat Sheet -->
+        <div class="player-cheatsheet p2-cheatsheet" id="p2-cheatsheet">
+          <div class="cheatsheet-title">P2 SIGNS (RIGHT)</div>
+          <div class="cheatsheet-signs">
+            <div class="sign-badge" data-sign="Closed_Fist" title="Light Attack [J]">✊ Light [J]</div>
+            <div class="sign-badge" data-sign="Victory" title="Heavy Attack [K]">✌️ Heavy [K]</div>
+            <div class="sign-badge" data-sign="Open_Palm" title="Block Guard [L]">✋ Block [L]</div>
+            <div class="sign-badge" data-sign="Pointing_Up" title="Move Forward [I]">☝️ Fwd [I]</div>
+            <div class="sign-badge" data-sign="Thumb_Up" title="Move Back [O]">👍 Back [O]</div>
+            <div class="sign-badge" data-sign="ILoveYou" title="Special Overdrive [P]">🤟 Super [P]</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Canvas Viewport -->
+      <div class="canvas-viewport" id="canvas-viewport">
+        <canvas id="fight-canvas" width="1280" height="720"></canvas>
+        <div class="slowmo-overlay" id="slowmo-overlay"></div>
+
+        <!-- Live Mirrored Webcam Picture-in-Picture -->
+        <div id="pip-container" class="pip-container">
+          <canvas id="pip-webcam-canvas" width="220" height="165"></canvas>
+          <div class="pip-label">LIVE WEBCAM MIRROR</div>
+        </div>
+      </div>
+
+      <!-- Quick Arena Controls -->
+      <div class="arena-quick-controls">
+        <button id="btn-restart-fight" class="mini-btn">🔄 Restart Duel</button>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 5: VICTORY & RESULTS ================= -->
+    <section id="screen-victory" class="game-screen">
+      <div class="victory-modal glass-panel">
+        <div class="confetti-container" id="confetti-container"></div>
+        <div class="winner-crown">👑</div>
+        <div class="victory-headline">IEEE SB VIT PUNE • CHAMPION CROWNED</div>
+        <div class="winner-name-display" id="winner-name-text">ROHAN WINS</div>
+        <div class="winner-dept-badge" id="winner-dept-text">E&TC ENGG • VIT PUNE</div>
+
+        <div class="winner-summary-grid">
+          <div class="summary-col">
+            <div class="sum-label">Winning Weapon</div>
+            <div class="sum-val" id="win-weapon-val">Plasma Katana</div>
+          </div>
+          <div class="summary-col">
+            <div class="sum-label">Finishing Move</div>
+            <div class="sum-val" id="win-finish-move">Sonic Storm Overdrive</div>
+          </div>
+          <div class="summary-col">
+            <div class="sum-label">Score</div>
+            <div class="sum-val" id="win-score-val">5 - 3 Clean Hits</div>
+          </div>
+        </div>
+
+        <!-- IEEE SB VIT Pune Minimal Promo -->
+        <div class="ieee-promo-card">
+          <div class="promo-links-row">
+            <span class="promo-badge">IEEE SB VIT PUNE</span>
+            <a href="https://ieeesbvitpune.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-promo-site">
+              ieeesbvitpune.vercel.app ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="victory-action-btns">
+          <button id="btn-rematch" class="btn-primary">⚔️ Rematch</button>
+          <button id="btn-victory-leaderboard" class="btn-secondary">🏆 Leaderboard</button>
+          <button id="btn-new-challengers" class="btn-secondary">New Players</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Hidden Gesture Debug Overlay (Toggle with 'D' key) -->
+  <div id="gesture-debug-overlay" class="gesture-debug-overlay" style="display:none;">
+    <canvas id="gesture-debug-canvas" width="640" height="180"></canvas>
+  </div>
+
+  <!-- ================= LEADERBOARD & MATCH HISTORY MODAL ================= -->
+  <div id="modal-leaderboard" class="modal-backdrop">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2>TOURNAMENT LEADERBOARD</h2>
+        </div>
+        <button id="btn-close-leaderboard" class="modal-close-btn" title="Close Leaderboard">✕</button>
+      </div>
+
+      <!-- Leaderboard Tabs -->
+      <div class="leaderboard-tabs">
+        <button class="lb-tab-btn active" id="lb-tab-departments">🏛️ Departments</button>
+        <button class="lb-tab-btn" id="lb-tab-rankings">🥇 Players</button>
+        <button class="lb-tab-btn" id="lb-tab-history">📜 Match Log (<span id="lb-history-count">0</span>)</button>
+      </div>
+
+      <!-- Action Toolbar -->
+      <!-- Action Toolbar -->
+      <div class="lb-toolbar">
+        <div class="lb-filter-group">
+          <label for="lb-dept-filter">Filter:</label>
+          <select id="lb-dept-filter" class="lb-select-filter">
+            <option value="ALL">All Departments</option>
+            <!-- Populated via JS -->
+          </select>
+        </div>
+        <div class="lb-action-buttons">
+          <button id="btn-add-test-duel" class="lb-btn-tool" title="Add a test duel">➕ Test</button>
+          <button id="btn-reset-leaderboard" class="lb-btn-tool btn-danger" title="Clear History">🗑️ Clear</button>
+        </div>
+      </div>
+
+      <!-- Body Section 1: Department Standings -->
+      <div id="lb-view-departments" class="lb-tab-view active">
+        <!-- Top 3 Department Podium Cards -->
+        <div class="dept-podium-grid" id="lb-dept-podium-cards">
+          <!-- Populated via JS -->
+        </div>
+
+        <div class="table-responsive" style="margin-top: 12px;">
+          <table class="lb-table dept-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Department</th>
+                <th>Duels</th>
+                <th>Wins</th>
+                <th>Damage</th>
+              </tr>
+            </thead>
+            <tbody id="lb-dept-standings-body">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Body Section 2: Player Rankings Table -->
+      <div id="lb-view-rankings" class="lb-tab-view">
+        <div class="table-responsive">
+          <table class="lb-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Department</th>
+                <th>Wins</th>
+                <th>Damage</th>
+              </tr>
+            </thead>
+            <tbody id="lb-rankings-body">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Body Section 3: Match History Log -->
+      <div id="lb-view-history" class="lb-tab-view">
+        <div class="table-responsive">
+          <table class="lb-table history-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Winner</th>
+                <th>Runner-up</th>
+                <th>Weapon</th>
+                <th>Damage</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="lb-history-body">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline Edit Match Modal -->
+  <div id="modal-edit-match" class="modal-backdrop sub-modal">
+    <div class="modal-content glass-panel mini-modal">
+      <div class="modal-header">
+        <h3>Edit Match Entry #<span id="edit-match-num"></span></h3>
+        <button id="btn-close-edit-match" class="modal-close-btn">✕</button>
+      </div>
+      <div class="edit-form">
+        <div class="input-group">
+          <label>Winner Name:</label>
+          <input type="text" id="edit-winner-name" maxlength="25">
+        </div>
+        <div class="input-group">
+          <label>Winner Department:</label>
+          <select id="edit-winner-dept">
+            <option value="Computer Engineering (CE)">Computer Engineering (CE)</option>
+            <option value="Information Technology (IT)">Information Technology (IT)</option>
+            <option value="Electronics & Telecommunication (E&TC)">Electronics & Telecommunication (E&TC)</option>
+            <option value="AI & Data Science (AIDS)">AI & Data Science (AIDS)</option>
+            <option value="CSE - Artificial Intelligence">CSE - Artificial Intelligence</option>
+            <option value="CSE - AI & Machine Learning">CSE - AI & Machine Learning</option>
+            <option value="CSE - Data Science">CSE - Data Science</option>
+            <option value="CSE - IoT & Cyber Security with Blockchain">CSE - IoT & Cyber Security with Blockchain</option>
+            <option value="Computer Engg - Software Engineering">Computer Engg - Software Engineering</option>
+            <option value="Mechanical Engineering (ME)">Mechanical Engineering (ME)</option>
+            <option value="Chemical Engineering">Chemical Engineering</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Instrumentation Engineering">Instrumentation Engineering</option>
+            <option value="Engineering, Science & Humanities (DESH)">Engineering, Science & Humanities (DESH)</option>
+            <option value="IEEE SB VIT Pune Member">IEEE SB VIT Pune Member</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Defeated Student Name:</label>
+          <input type="text" id="edit-loser-name" maxlength="25">
+        </div>
+        <div class="input-group">
+          <label>Defeated Department:</label>
+          <select id="edit-loser-dept">
+            <option value="Computer Engineering (CE)">Computer Engineering (CE)</option>
+            <option value="Information Technology (IT)">Information Technology (IT)</option>
+            <option value="Electronics & Telecommunication (E&TC)">Electronics & Telecommunication (E&TC)</option>
+            <option value="AI & Data Science (AIDS)">AI & Data Science (AIDS)</option>
+            <option value="CSE - Artificial Intelligence">CSE - Artificial Intelligence</option>
+            <option value="CSE - AI & Machine Learning">CSE - AI & Machine Learning</option>
+            <option value="CSE - Data Science">CSE - Data Science</option>
+            <option value="CSE - IoT & Cyber Security with Blockchain">CSE - IoT & Cyber Security with Blockchain</option>
+            <option value="Computer Engg - Software Engineering">Computer Engg - Software Engineering</option>
+            <option value="Mechanical Engineering (ME)">Mechanical Engineering (ME)</option>
+            <option value="Chemical Engineering">Chemical Engineering</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Instrumentation Engineering">Instrumentation Engineering</option>
+            <option value="Engineering, Science & Humanities (DESH)">Engineering, Science & Humanities (DESH)</option>
+            <option value="IEEE SB VIT Pune Member">IEEE SB VIT Pune Member</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Damage Dealt:</label>
+          <input type="number" id="edit-damage" min="100" max="9999">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-cancel-edit" class="btn-secondary">Cancel</button>
+        <button id="btn-save-edit" class="btn-primary">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <span>IEEE Student Branch VIT Pune • <a href="https://ieeesbvitpune.vercel.app/" target="_blank" rel="noopener noreferrer">ieeesbvitpune.vercel.app</a></span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="audio.js"></script>
+  <script src="weapons.js"></script>
+  <script src="hand-input.js"></script>
+  <script src="gestures.js"></script>
+  <script src="stickman.js"></script>
+  <script src="arena.js"></script>
+  <script src="leaderboard.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
