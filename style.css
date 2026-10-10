@@ -791,9 +791,9 @@ body {
   flex-shrink: 0;
 }
 
-/* ================= SCREEN 3: ARENA & CANVAS ================= */
+/* ================= SCREEN 3: ARENA & CANVAS (3-COLUMN BATTLEFIELD) ================= */
 #screen-arena {
-  padding: 4px 14px 4px;
+  padding: 6px 14px 6px;
   height: 100%;
   max-height: 100%;
   overflow: hidden;
@@ -801,290 +801,689 @@ body {
   justify-content: flex-start;
 }
 
-.battle-hud {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 4px;
-  flex-shrink: 0;
+body:has(#screen-arena.active) .app-footer,
+body.in-match .app-footer {
+  display: none !important;
 }
 
-.hud-player {
+body:has(#screen-arena.active) #app-container,
+body.in-match #app-container {
+  height: calc(100vh - 52px);
+  max-height: calc(100vh - 52px);
+}
+
+/* ================= ARENA DUAL-HALF SPLIT (UPPER & LOWER) ================= */
+.arena-dual-half-layout {
+  display: grid;
+  grid-template-rows: minmax(280px, 42%) 1fr;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ================= UPPER HALF (RATIO 2 : 3 : 2) ================= */
+.arena-upper-half {
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .arena-upper-half {
+    grid-template-columns: 2fr 3fr 2fr;
+    gap: 6px;
+  }
+}
+
+/* Section 1, 2, 3 Panels */
+.arena-section {
   background: #ffffff;
+  border-radius: 12px;
   border: 1px solid var(--border-glass);
-  border-radius: 8px;
-  padding: 5px 12px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
   display: flex;
   flex-direction: column;
   gap: 3px;
-  box-shadow: var(--shadow-sm);
+  padding: 4px 7px;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  position: relative;
 }
 
-.p1-hud { border-left: 4px solid var(--p1-cyan); }
-.p2-hud { border-right: 4px solid var(--p2-purple); }
+.arena-section .player-cheatsheet {
+  display: none;
+}
 
-.hud-info {
+.arena-section::-webkit-scrollbar {
+  width: 4px;
+}
+.arena-section::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 2px;
+}
+
+.arena-section-1 {
+  border-top: 4px solid var(--p1-cyan);
+  border-left: 2px solid var(--p1-border);
+  background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 35%);
+}
+
+.arena-section-3 {
+  border-top: 4px solid #ea580c;
+  border-right: 2px solid #fed7aa;
+  background: linear-gradient(180deg, #fff7ed 0%, #ffffff 35%);
+}
+
+.section-name-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  flex-shrink: 0;
+}
+
+.arena-section-1 .section-name-header {
+  background: rgba(2, 132, 199, 0.08);
+  color: #0284c7;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+
+.arena-section-2 .section-name-header {
+  background: rgba(15, 23, 42, 0.8);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 4px;
+}
+
+.arena-section-3 .section-name-header {
+  background: rgba(234, 88, 12, 0.08);
+  color: #ea580c;
+  border: 1px solid rgba(234, 88, 12, 0.2);
+}
+
+.sec-sub {
+  font-family: var(--font-tech);
+  font-size: 0.62rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+/* ================= SECTION 2: LIVE CAMERA CONSOLE ================= */
+.arena-section-2 {
+  background: radial-gradient(circle at 50% 50%, #0d1b2e 0%, #030712 100%);
+  border-top: 4px solid #38bdf8;
+  border: 1px solid rgba(2, 132, 199, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  overflow: hidden;
+}
+
+.arena-section-2 .pip-container {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  background: #0f172a;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 25px rgba(2, 132, 199, 0.2);
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.arena-section-2 .pip-canvas-holder {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  background: #0f172a;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arena-section-2 #pip-webcam-canvas {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.cam-active-badge {
+  font-family: var(--font-tech);
+  font-size: 0.62rem;
+  font-weight: 800;
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* ================= LOWER HALF: GAME CONSOLE VIEWPORT ================= */
+.arena-lower-half {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+  padding: 6px 8px;
+  overflow: hidden;
+}
+
+.game-console-strip {
+  height: 30px;
+  padding: 3px 10px;
+  margin-bottom: 2px;
+}
+
+.console-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 60%, #0c1a2e 0%, #030712 100%);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid rgba(2, 132, 199, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), inset 0 0 35px rgba(0, 240, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.console-viewport #fight-canvas {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 62%;
+}
+
+/* ================= ARENA SIDEBARS (LEFT: P1, RIGHT: P2) ================= */
+.arena-sidebar {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 10px;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.arena-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.arena-sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 2px;
+}
+
+.arena-sidebar-p1 {
+  border-top: 4px solid var(--p1-cyan);
+  border-left: 2px solid var(--p1-border);
+  background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 35%);
+}
+
+.arena-sidebar-p2 {
+  border-top: 4px solid #ea580c;
+  border-right: 2px solid #fed7aa;
+  background: linear-gradient(180deg, #fff7ed 0%, #ffffff 35%);
+}
+
+/* Sidebar Fighter Header Card */
+.sidebar-fighter-card {
+  background: #ffffff;
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  padding: 4px 6px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sidebar-tag-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
-.hud-name {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 800;
-}
-
-.p1-hud .hud-name { color: var(--p1-cyan); }
-.p2-hud .hud-name { color: var(--p2-purple); }
-
-.hud-weapon {
-  font-family: var(--font-tech);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.hud-hp-bar {
-  position: relative;
-  width: 100%;
-  height: 14px;
-  background: #e2e8f0;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid var(--border-strong);
-}
-
-.hud-hp-fill {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  transition: width 0.15s ease-out;
-}
-
-.p1-hud .hud-hp-fill {
-  left: 0;
-  background: var(--p1-cyan);
-}
-
-.p2-hud .hud-hp-fill {
-  right: 0;
-  background: var(--p2-purple);
-}
-
-.hud-hp-lag {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.4);
-  transition: width 0.5s ease-out;
-}
-
-.p1-hud .hud-hp-lag { left: 0; }
-.p2-hud .hud-hp-lag { right: 0; }
-
-.hud-hp-val {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-  z-index: 5;
-}
-
-.hud-hype-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-tech);
-  font-size: 0.72rem;
-  color: var(--text-muted);
-}
-
-.hype-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-}
-
-.hype-fill {
-  flex: 1;
-  height: 4px;
-  background: #e2e8f0;
-  border-radius: 2px;
-  position: relative;
-  overflow: hidden;
-}
-
-.p1-hud .hype-fill::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: var(--hype-w, 0%);
-  background: var(--p1-cyan);
-  transition: width 0.1s;
-}
-
-.p2-hud .hype-fill::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: var(--hype-w, 0%);
-  background: var(--p2-purple);
-  transition: width 0.1s;
-}
-
-.hud-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 80px;
-}
-
-.round-timer {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--ieee-navy);
-  line-height: 1;
-}
-
-.clash-meter-label {
-  font-family: var(--font-tech);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-.match-mode-tag {
-  font-size: 0.65rem;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-glass);
-  padding: 1px 6px;
-  border-radius: 3px;
-  color: var(--ieee-blue);
-  font-weight: 700;
-}
-
-/* Combat Telemetry Banner */
-.combat-telemetry-strip {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 10px;
-  padding: 3px 12px;
-  background: #ffffff;
-  border: 1px solid var(--border-glass);
-  border-radius: 6px;
-  margin-bottom: 4px;
-  flex-shrink: 0;
-  box-shadow: var(--shadow-sm);
-}
-
-.telemetry-fighter {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  background: var(--bg-subtle);
-}
-
-.p1-move { border-left: 3px solid var(--p1-cyan); }
-.p2-move { border-right: 3px solid var(--p2-purple); justify-content: flex-end; }
 
 .fighter-tag {
   font-family: var(--font-display);
   font-size: 0.72rem;
   font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .p1-color { color: var(--p1-cyan); }
-.p2-color { color: var(--p2-purple); }
+.p2-color { color: #ea580c; }
 
-.move-name {
+.sidebar-fighter-card .hud-dept-mini {
   font-family: var(--font-tech);
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--text-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: -1px;
 }
 
-.telemetry-center-icon {
-  font-size: 1rem;
+.hud-dept-mini {
+  font-family: var(--font-tech);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
-/* Announcer */
-.battle-announcer {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
+.sidebar-name {
   font-family: var(--font-display);
-  font-size: 3rem;
-  font-weight: 900;
-  color: var(--ieee-navy);
-  pointer-events: none;
-  opacity: 0;
-  z-index: 50;
-  letter-spacing: 3px;
-  transition: all 0.3s ease;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
 }
 
-.battle-announcer.active {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.05);
+.arena-sidebar-p1 .sidebar-name { color: #0284c7; }
+.arena-sidebar-p2 .sidebar-name { color: #ea580c; }
+
+.sidebar-weapon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-tech);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-glass);
+  width: fit-content;
 }
 
-.booth-cheer-prompt {
+/* Sidebar Section Shared */
+.sidebar-section {
+  background: #ffffff;
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  padding: 3px 6px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.section-label-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2px 12px;
+}
+
+.section-title {
+  font-family: var(--font-tech);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+/* Stamina Score & 5 Hit Pips */
+.stamina-ratio {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.arena-sidebar-p1 .stamina-ratio { color: var(--p1-cyan); }
+.arena-sidebar-p2 .stamina-ratio { color: #ea580c; }
+
+.hit-pips-row {
+  display: flex;
+  gap: 6px;
+  justify-content: space-between;
+}
+
+.hit-pip {
+  flex: 1;
+  height: 14px;
+  border-radius: 4px;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.arena-sidebar-p1 .hit-pip {
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+  border: 1px solid #7dd3fc;
+  box-shadow: 0 0 8px rgba(2, 132, 199, 0.5);
+}
+
+.arena-sidebar-p2 .hit-pip {
+  background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+  border: 1px solid #fdba74;
+  box-shadow: 0 0 8px rgba(234, 88, 12, 0.5);
+}
+
+.hit-pip.pip-lost {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  box-shadow: none !important;
+  opacity: 0.25 !important;
+  transform: scale(0.85);
+}
+
+.pips-subtext {
+  font-family: var(--font-tech);
+  font-size: 0.68rem;
+  color: var(--text-subtle);
+  text-align: center;
+}
+
+/* Special Overdrive Meter */
+.special-percent {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--gold-accent);
+}
+
+.hud-special-bar {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--border-glass);
+  position: relative;
+}
+
+.special-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.25s ease;
+}
+
+.arena-sidebar-p1 .special-fill {
+  background: linear-gradient(90deg, #00f0ff, #0284c7);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+}
+
+.arena-sidebar-p2 .special-fill {
+  background: linear-gradient(90deg, #f97316, #e11d48);
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.7);
+}
+
+/* Current Action Telemetry Card */
+.telemetry-fighter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
   background: var(--bg-subtle);
+  transition: all 0.2s ease;
+}
+
+.telemetry-fighter.highlight {
+  background: #fef08a !important;
+  transform: scale(1.02);
+}
+
+.p1-move { border-left: 3px solid var(--p1-cyan); }
+.p2-move { border-left: 3px solid #ea580c; }
+
+.move-name {
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hand Lost Alert Banner */
+.hand-alert-banner {
+  display: none;
+  padding: 6px 10px;
   border-radius: 6px;
   font-family: var(--font-tech);
-  font-size: 0.75rem;
-  margin-bottom: 3px;
-  flex-shrink: 0;
-  border: 1px solid var(--border-glass);
-}
-
-.cheer-key {
+  font-size: 0.8rem;
   font-weight: 700;
+  text-align: center;
+  border: 1px solid;
+  animation: alertPulse 1s infinite;
 }
 
-.p1-key { color: var(--p1-cyan); }
-.p2-key { color: var(--p2-purple); }
-.cheer-center { color: var(--gold-accent); font-weight: 700; }
+.hand-alert-banner.active {
+  display: block;
+}
 
-/* Canvas Viewport */
+.alert-p1 {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #f87171;
+}
+
+.alert-p2 {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #f87171;
+}
+
+/* Gesture Cheat Sheet */
+.cheatsheet-section {
+  flex: 1;
+  min-height: 0;
+}
+
+.cheatsheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.key-hint {
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  color: var(--text-subtle);
+}
+
+.player-cheatsheet {
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.cheatsheet-signs.vertical-signs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.sign-badge {
+  font-family: var(--font-tech);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 6px;
+  border-radius: 5px;
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  text-align: center;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.arena-sidebar-p1 .sign-badge.active-sign {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #00f0ff;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+  transform: scale(1.05);
+}
+
+.arena-sidebar-p2 .sign-badge.active-sign {
+  background: #ea580c;
+  color: #ffffff;
+  border-color: #fb923c;
+  box-shadow: 0 0 10px rgba(234, 88, 12, 0.7);
+  transform: scale(1.05);
+}
+
+/* ================= CENTER ARENA STAGE (GAME VIEWPORT) ================= */
+.arena-center-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  flex: 1;
+}
+
+/* Arena Mini Top Strip */
+.arena-top-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 12px;
+  background: #ffffff;
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+  height: 34px;
+}
+
+.strip-player-chip {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.p1-chip {
+  background: #e0f2fe;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.p2-chip {
+  background: #ffedd5;
+  color: #ea580c;
+  border: 1px solid #fed7aa;
+}
+
+.strip-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.strip-match-title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: var(--ieee-navy);
+}
+
+.strip-dot {
+  color: var(--text-subtle);
+  font-weight: bold;
+}
+
+.strip-sub {
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ieee-blue);
+  letter-spacing: 0.5px;
+}
+
+.strip-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mini-btn-styled {
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  color: var(--text-main);
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mini-btn-styled:hover {
+  background: var(--bg-subtle);
+  border-color: var(--ieee-blue);
+  color: var(--ieee-blue);
+}
+
+/* ================= GAME CONSOLE VIEWPORT ================= */
 .canvas-viewport {
   position: relative;
   flex: 1 1 0;
   min-height: 0;
   min-width: 0;
   width: 100%;
-  background: #0f172a;
+  height: 100%;
+  background: radial-gradient(circle at 50% 60%, #0c1a2e 0%, #030712 100%);
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid var(--border-strong);
-  box-shadow: var(--shadow-sm);
+  border: 2px solid rgba(2, 132, 199, 0.4);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), inset 0 0 30px rgba(0, 240, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1096,34 +1495,120 @@ body {
   max-width: 100%;
   max-height: 100%;
   display: block;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center 62%;
 }
 
-.arena-quick-controls {
+/* Battle Announcer */
+.battle-announcer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.8), 0 2px 8px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 50;
+  letter-spacing: 4px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.battle-announcer.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* ================= SECTION 2: LIVE WEBCAM CAMERA WIDGET ================= */
+.sidebar-cam-section,
+.pip-container {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  background: #0f172a;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid rgba(56, 189, 248, 0.6);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 2px 0 0;
-  flex-shrink: 0;
+  flex-direction: column;
+  margin: 0 auto;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
 }
 
-.mini-btn {
-  background: #ffffff;
-  border: 1px solid var(--border-strong);
-  color: var(--text-muted);
+.pip-header-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.6) 75%, transparent 100%);
+  pointer-events: auto;
+}
+
+.pip-title {
   font-family: var(--font-tech);
-  font-size: 0.74rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.8px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
-.mini-btn:hover {
-  background: var(--bg-subtle);
-  color: var(--text-main);
+.pip-canvas-holder {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  background: #0f172a;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+#pip-webcam-canvas {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.pip-footer-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  background: linear-gradient(0deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.6) 75%, transparent 100%);
+  font-family: var(--font-tech);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+.p1-cam-tag { color: #38bdf8; }
+.p2-cam-tag { color: #fb923c; }
+.zone-divider-dot { color: rgba(255, 255, 255, 0.3); }
 
 /* ================= SCREEN 4: VICTORY MODAL ================= */
 #screen-victory {
@@ -2262,221 +2747,7 @@ body {
   letter-spacing: 1.5px;
 }
 
-/* ================= 5 HIT PIPS & COMBAT HUD ================= */
-.hit-pips-container {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.pips-label {
-  font-family: var(--font-tech);
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-muted);
-}
-.hit-pips-row {
-  display: flex;
-  gap: 5px;
-}
-.hit-pip {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  background: #0284c7;
-  border: 1px solid #38bdf8;
-  box-shadow: 0 0 6px rgba(2, 132, 199, 0.5);
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.p2-hud .hit-pip {
-  background: #ea580c;
-  border-color: #fb923c;
-  box-shadow: 0 0 6px rgba(234, 88, 12, 0.5);
-}
-.hit-pip.pip-lost {
-  background: #334155 !important;
-  border-color: #475569 !important;
-  box-shadow: none !important;
-  opacity: 0.35;
-  transform: scale(0.75);
-}
 
-.hud-special-bar {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: rgba(15, 23, 42, 0.08);
-  padding: 3px 6px;
-  border-radius: 4px;
-  border: 1px solid var(--border-glass);
-}
-.special-label {
-  font-family: var(--font-tech);
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--ieee-blue);
-  letter-spacing: 0.5px;
-}
-.p2-hud .special-label {
-  color: #ea580c;
-  text-align: right;
-}
-.special-fill {
-  height: 6px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, #00f0ff, #38bdf8);
-  box-shadow: 0 0 6px rgba(0, 240, 255, 0.6);
-  transition: width 0.25s ease;
-}
-.p2-hud .special-fill {
-  background: linear-gradient(90deg, #f97316, #fbbf24);
-  box-shadow: 0 0 6px rgba(249, 115, 22, 0.6);
-  align-self: flex-end;
-}
-.first-to-5-tag {
-  font-family: var(--font-display);
-  font-size: 0.92rem;
-  font-weight: 900;
-  letter-spacing: 1.5px;
-  color: #0f172a;
-}
-.hud-dept-mini {
-  font-family: var(--font-tech);
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-/* Hand Lost Alerts */
-.hand-alert-banner {
-  display: none;
-  position: absolute;
-  top: 72px;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-family: var(--font-tech);
-  font-size: 0.85rem;
-  font-weight: 700;
-  z-index: 50;
-  animation: alertPulse 1s infinite;
-}
-.hand-alert-banner.active {
-  display: block;
-}
-.alert-p1 {
-  left: 20px;
-  background: #fee2e2;
-  color: #b91c1c;
-  border: 1px solid #f87171;
-}
-.alert-p2 {
-  right: 20px;
-  background: #fee2e2;
-  color: #b91c1c;
-  border: 1px solid #f87171;
-}
-@keyframes alertPulse {
-  0%, 100% { opacity: 1; transform: translateY(0); }
-  50% { opacity: 0.7; transform: translateY(-2px); }
-}
-
-/* ================= GESTURE CHEAT SHEET HUDS ================= */
-.arena-cheatsheets-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  margin-bottom: 4px;
-}
-.player-cheatsheet {
-  flex: 1;
-  background: #ffffff;
-  border: 1px solid var(--border-glass);
-  border-radius: 8px;
-  padding: 4px 10px;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.p1-cheatsheet {
-  border-left: 3px solid #0284c7;
-}
-.p2-cheatsheet {
-  border-right: 3px solid #ea580c;
-  justify-content: flex-end;
-}
-.cheatsheet-title {
-  font-family: var(--font-display);
-  font-size: 0.65rem;
-  font-weight: 800;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-}
-.cheatsheet-signs {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-.sign-badge {
-  font-family: var(--font-tech);
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: #f1f5f9;
-  color: #475569;
-  border: 1px solid #cbd5e1;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-.sign-badge.active-sign {
-  background: #0284c7;
-  color: #ffffff;
-  border-color: #00f0ff;
-  box-shadow: 0 0 8px rgba(0, 240, 255, 0.7);
-  transform: scale(1.08);
-}
-.p2-cheatsheet .sign-badge.active-sign {
-  background: #ea580c;
-  color: #ffffff;
-  border-color: #fb923c;
-  box-shadow: 0 0 8px rgba(234, 88, 12, 0.7);
-}
-
-/* ================= LIVE PICTURE-IN-PICTURE WEBCAM ================= */
-.pip-container {
-  position: absolute;
-  bottom: 12px;
-  right: 14px;
-  width: 220px;
-  height: 165px;
-  background: #0f172a;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 2px solid rgba(2, 132, 199, 0.6);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
-  z-index: 40;
-  transition: opacity 0.2s ease;
-}
-#pip-webcam-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-.pip-label {
-  position: absolute;
-  bottom: 2px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-family: var(--font-tech);
-  font-size: 0.6rem;
-  font-weight: 700;
-  color: #38bdf8;
-  background: rgba(15, 23, 42, 0.75);
-  letter-spacing: 0.5px;
-}
 
 /* ================= GESTURE DEBUG OVERLAY ================= */
 .gesture-debug-overlay {

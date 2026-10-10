@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IEEE Cyber Clash - Stickman Showdown</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=10">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -225,129 +225,206 @@
 
     <!-- ================= SCREEN 4: THE BATTLE ARENA ================= -->
     <section id="screen-arena" class="game-screen">
-      <!-- Arena Top HUD (5 Hit Pips & Overdrive Special Meter) -->
-      <div class="battle-hud">
-        <!-- Player 1 HUD -->
-        <div class="hud-player p1-hud">
-          <div class="hud-info">
-            <span class="hud-name" id="hud-p1-name">Rohan</span>
-            <span class="hud-dept-mini" id="hud-p1-dept">E&TC</span>
-            <span class="hud-weapon" id="hud-p1-weapon">Plasma Katana</span>
-          </div>
-          <!-- 5 Hit Pips -->
-          <div class="hit-pips-container">
-            <span class="pips-label">STAMINA:</span>
-            <div class="hit-pips-row" id="p1-pips">
-              <div class="hit-pip"></div>
-              <div class="hit-pip"></div>
-              <div class="hit-pip"></div>
-              <div class="hit-pip"></div>
-              <div class="hit-pip"></div>
+      <div class="arena-dual-half-layout">
+        <!-- ============ UPPER HALF: 3 SECTIONS (RATIO 2 : 3 : 2) ============ -->
+        <div class="arena-upper-half" id="arena-upper-half">
+          <!-- SECTION 1 (LEFT, RATIO 2): PLAYER 1 STATS -->
+          <div class="arena-section arena-section-1 arena-sidebar-p1" id="section-1" data-section="Section 1">
+            <div class="section-name-header">
+              <span class="sec-label">SECTION 1</span>
+              <span class="sec-sub">P1 STATS</span>
+            </div>
+
+            <!-- Fighter 1 Profile Card -->
+            <div class="sidebar-fighter-card p1-card-accent">
+              <div class="sidebar-tag-row">
+                <span class="fighter-tag p1-color">P1 · CHALLENGER</span>
+              </div>
+              <div class="sidebar-name" id="hud-p1-name">Rohan</div>
+              <div class="hud-dept-mini" id="hud-p1-dept">Electronics & Telecommunication (E&TC)</div>
+              <div class="sidebar-weapon-badge">
+                <span class="weapon-icon-mini">🗡️</span>
+                <span id="hud-p1-weapon">Plasma Katana</span>
+              </div>
+            </div>
+
+            <!-- P1 Stamina & Hit Pips Score -->
+            <div class="sidebar-section stamina-score-section">
+              <div class="section-label-row">
+                <span class="section-title">STAMINA SCORE</span>
+                <span class="stamina-ratio" id="p1-stamina-count">5 / 5</span>
+              </div>
+              <div class="hit-pips-row" id="p1-pips">
+                <div class="hit-pip"></div>
+                <div class="hit-pip"></div>
+                <div class="hit-pip"></div>
+                <div class="hit-pip"></div>
+                <div class="hit-pip"></div>
+              </div>
+              <div class="pips-subtext">5 Clean Hits Allowed</div>
+            </div>
+
+            <!-- P1 Special Overdrive Meter -->
+            <div class="sidebar-section special-meter-section">
+              <div class="section-label-row">
+                <span class="section-title">OVERDRIVE [ 🤟 ]</span>
+                <span class="special-percent" id="p1-special-num">0%</span>
+              </div>
+              <div class="hud-special-bar">
+                <div class="special-fill" id="p1-special-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- P1 Real-time Combat Action -->
+            <div class="sidebar-section telemetry-section">
+              <span class="section-title">CURRENT ACTION</span>
+              <div class="telemetry-fighter p1-move" id="p1-move-card">
+                <span class="fighter-tag p1-color" id="telemetry-p1-name">P1</span>
+                <span class="move-name" id="p1-move-text">READY FOR COMBAT</span>
+              </div>
+            </div>
+
+            <!-- P1 Hand Status Alert -->
+            <div id="p1-hand-alert" class="hand-alert-banner alert-p1">
+              ⚠️ Player 1: Show your hand!
+            </div>
+
+            <!-- P1 Gesture Cheat Sheet -->
+            <div class="player-cheatsheet p1-cheatsheet" id="p1-cheatsheet">
+              <div class="cheatsheet-signs vertical-signs">
+                <div class="sign-badge" data-sign="Closed_Fist" title="Light Attack [A]">✊ Light [A]</div>
+                <div class="sign-badge" data-sign="Victory" title="Heavy Attack [S]">✌️ Heavy [S]</div>
+                <div class="sign-badge" data-sign="Open_Palm" title="Block Guard [D]">✋ Block [D]</div>
+                <div class="sign-badge" data-sign="Pointing_Up" title="Move Forward [F]">☝️ Fwd [F]</div>
+                <div class="sign-badge" data-sign="Thumb_Up" title="Move Back [G]">👍 Back [G]</div>
+                <div class="sign-badge" data-sign="ILoveYou" title="Special Overdrive [H]">🤟 Super [H]</div>
+              </div>
             </div>
           </div>
-          <!-- Special Overdrive Meter -->
-          <div class="hud-special-bar">
-            <div class="special-label">OVERDRIVE [🤟]</div>
-            <div class="special-fill" id="p1-special-fill" style="width: 0%;"></div>
-          </div>
-        </div>
 
-        <!-- Central Telemetry & Mode Tag -->
-        <div class="hud-center">
-          <div class="first-to-5-tag">FIRST TO 5 CLEAN HITS</div>
-          <div class="match-mode-tag">IEEE SB VIT PUNE • BOOTH SHOWDOWN</div>
-        </div>
+          <!-- SECTION 2 (MIDDLE, RATIO 3): LIVE CAMERA WINDOW -->
+          <div class="arena-section arena-section-2" id="section-2" data-section="Section 2">
+            <div class="section-name-header">
+              <span class="sec-label">SECTION 2</span>
+              <span class="sec-sub">LIVE WEBCAM & SKELETON CONSOLE</span>
+            </div>
 
-        <!-- Player 2 HUD -->
-        <div class="hud-player p2-hud">
-          <div class="hud-info">
-            <span class="hud-weapon" id="hud-p2-weapon">Tesla Hammer</span>
-            <span class="hud-dept-mini" id="hud-p2-dept">CE</span>
-            <span class="hud-name" id="hud-p2-name">Tanvi</span>
-          </div>
-          <!-- 5 Hit Pips -->
-          <div class="hit-pips-container">
-            <span class="pips-label">STAMINA:</span>
-            <div class="hit-pips-row" id="p2-pips">
-              <div class="hit-pip"></div>
-              <div class="hit-pip"></div>
-              <div class="hit-pip"></div>
-              <div class="hit-pip"></div>
-              <div class="hit-pip"></div>
+            <div class="sidebar-section sidebar-cam-section" id="pip-container">
+              <div class="pip-header-bar">
+                <span class="pip-title">🔴 LIVE WEBCAM & SKELETON</span>
+                <span class="cam-active-badge">ACTIVE</span>
+              </div>
+              <div class="pip-canvas-holder">
+                <canvas id="pip-webcam-canvas" width="640" height="360"></canvas>
+              </div>
+              <div class="pip-footer-bar">
+                <span class="zone-tag p1-cam-tag">◄ P1 ZONE</span>
+                <span class="zone-divider-dot">|</span>
+                <span class="zone-tag p2-cam-tag">P2 ZONE ►</span>
+              </div>
             </div>
           </div>
-          <!-- Special Overdrive Meter -->
-          <div class="hud-special-bar">
-            <div class="special-label">OVERDRIVE [🤟]</div>
-            <div class="special-fill" id="p2-special-fill" style="width: 0%;"></div>
+
+          <!-- SECTION 3 (RIGHT, RATIO 1): PLAYER 2 STATS -->
+          <div class="arena-section arena-section-3 arena-sidebar-p2" id="section-3" data-section="Section 3">
+            <div class="section-name-header">
+              <span class="sec-label">SECTION 3</span>
+              <span class="sec-sub">P2 STATS</span>
+            </div>
+
+            <!-- Fighter 2 Profile Card -->
+            <div class="sidebar-fighter-card p2-card-accent">
+              <div class="sidebar-tag-row">
+                <span class="fighter-tag p2-color">P2 · CHALLENGER</span>
+              </div>
+              <div class="sidebar-name" id="hud-p2-name">Tanvi</div>
+              <div class="hud-dept-mini" id="hud-p2-dept">Computer Engineering (CE)</div>
+              <div class="sidebar-weapon-badge">
+                <span class="weapon-icon-mini">🔨</span>
+                <span id="hud-p2-weapon">Tesla Hammer</span>
+              </div>
+            </div>
+
+            <!-- P2 Stamina & Hit Pips Score -->
+            <div class="sidebar-section stamina-score-section">
+              <div class="section-label-row">
+                <span class="section-title">STAMINA SCORE</span>
+                <span class="stamina-ratio" id="p2-stamina-count">5 / 5</span>
+              </div>
+              <div class="hit-pips-row" id="p2-pips">
+                <div class="hit-pip"></div>
+                <div class="hit-pip"></div>
+                <div class="hit-pip"></div>
+                <div class="hit-pip"></div>
+                <div class="hit-pip"></div>
+              </div>
+              <div class="pips-subtext">5 Clean Hits Allowed</div>
+            </div>
+
+            <!-- P2 Special Overdrive Meter -->
+            <div class="sidebar-section special-meter-section">
+              <div class="section-label-row">
+                <span class="section-title">OVERDRIVE [ 🤟 ]</span>
+                <span class="special-percent" id="p2-special-num">0%</span>
+              </div>
+              <div class="hud-special-bar">
+                <div class="special-fill" id="p2-special-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- P2 Real-time Combat Action -->
+            <div class="sidebar-section telemetry-section">
+              <span class="section-title">CURRENT ACTION</span>
+              <div class="telemetry-fighter p2-move" id="p2-move-card">
+                <span class="move-name" id="p2-move-text">READY FOR COMBAT</span>
+                <span class="fighter-tag p2-color" id="telemetry-p2-name">P2</span>
+              </div>
+            </div>
+
+            <!-- P2 Hand Status Alert -->
+            <div id="p2-hand-alert" class="hand-alert-banner alert-p2">
+              ⚠️ Player 2: Show your hand!
+            </div>
+
+            <!-- P2 Gesture Cheat Sheet -->
+            <div class="player-cheatsheet p2-cheatsheet" id="p2-cheatsheet">
+              <div class="cheatsheet-signs vertical-signs">
+                <div class="sign-badge" data-sign="Closed_Fist" title="Light Attack [J]">✊ Light [J]</div>
+                <div class="sign-badge" data-sign="Victory" title="Heavy Attack [K]">✌️ Heavy [K]</div>
+                <div class="sign-badge" data-sign="Open_Palm" title="Block Guard [L]">✋ Block [L]</div>
+                <div class="sign-badge" data-sign="Pointing_Up" title="Move Forward [I]">☝️ Fwd [I]</div>
+                <div class="sign-badge" data-sign="Thumb_Up" title="Move Back [O]">👍 Back [O]</div>
+                <div class="sign-badge" data-sign="ILoveYou" title="Special Overdrive [P]">🤟 Super [P]</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Real-time Move Telemetry Banner -->
-      <div id="combat-telemetry-strip" class="combat-telemetry-strip">
-        <div class="telemetry-fighter p1-move" id="p1-move-card">
-          <span class="fighter-tag p1-color" id="telemetry-p1-name">P1 ROHAN</span>
-          <span class="move-name" id="p1-move-text">READY FOR COMBAT</span>
-        </div>
-        <div class="telemetry-center-icon">⚔️</div>
-        <div class="telemetry-fighter p2-move" id="p2-move-card">
-          <span class="move-name" id="p2-move-text">READY FOR COMBAT</span>
-          <span class="fighter-tag p2-color" id="telemetry-p2-name">TANVI P2</span>
-        </div>
-      </div>
+        <!-- ============ LOWER HALF: THE GAME CONSOLE VIEWPORT ============ -->
+        <div class="arena-lower-half" id="arena-lower-half">
+          <!-- Game Console Top Bar -->
+          <div class="arena-top-strip game-console-strip">
+            <div class="strip-left">
+              <span class="strip-player-chip p1-chip" id="strip-p1-name">P1 ROHAN</span>
+            </div>
+            <div class="strip-center">
+              <span class="strip-match-title">FIRST TO 5 CLEAN HITS</span>
+              <span class="strip-dot">•</span>
+              <span class="strip-sub">IEEE SB VIT PUNE</span>
+            </div>
+            <div class="strip-right">
+              <span class="strip-player-chip p2-chip" id="strip-p2-name">TANVI P2</span>
+              <button id="btn-restart-fight" class="mini-btn-styled" title="Restart Match">🔄 Restart Duel</button>
+            </div>
+          </div>
 
-      <!-- Hand Lost Alert Warnings -->
-      <div id="p1-hand-alert" class="hand-alert-banner alert-p1">Player 1: Show your hand!</div>
-      <div id="p2-hand-alert" class="hand-alert-banner alert-p2">Player 2: Show your hand!</div>
-
-      <!-- Action Ticker & Crowd Commentary -->
-      <div id="battle-announcer" class="battle-announcer">FIGHT!</div>
-
-      <!-- On-Screen Gesture Cheat Sheet HUD -->
-      <div class="arena-cheatsheets-row">
-        <!-- P1 Cheat Sheet -->
-        <div class="player-cheatsheet p1-cheatsheet" id="p1-cheatsheet">
-          <div class="cheatsheet-title">P1 SIGNS (LEFT)</div>
-          <div class="cheatsheet-signs">
-            <div class="sign-badge" data-sign="Closed_Fist" title="Light Attack [A]">✊ Light [A]</div>
-            <div class="sign-badge" data-sign="Victory" title="Heavy Attack [S]">✌️ Heavy [S]</div>
-            <div class="sign-badge" data-sign="Open_Palm" title="Block Guard [D]">✋ Block [D]</div>
-            <div class="sign-badge" data-sign="Pointing_Up" title="Move Forward [F]">☝️ Fwd [F]</div>
-            <div class="sign-badge" data-sign="Thumb_Up" title="Move Back [G]">👍 Back [G]</div>
-            <div class="sign-badge" data-sign="ILoveYou" title="Special Overdrive [H]">🤟 Super [H]</div>
+          <!-- The Game Canvas Viewport (100% Completely Unobstructed, No Blank Space) -->
+          <div class="canvas-viewport console-viewport" id="canvas-viewport">
+            <canvas id="fight-canvas" width="1280" height="720"></canvas>
+            <div class="slowmo-overlay" id="slowmo-overlay"></div>
+            <div id="battle-announcer" class="battle-announcer">FIGHT!</div>
           </div>
         </div>
-
-        <!-- P2 Cheat Sheet -->
-        <div class="player-cheatsheet p2-cheatsheet" id="p2-cheatsheet">
-          <div class="cheatsheet-title">P2 SIGNS (RIGHT)</div>
-          <div class="cheatsheet-signs">
-            <div class="sign-badge" data-sign="Closed_Fist" title="Light Attack [J]">✊ Light [J]</div>
-            <div class="sign-badge" data-sign="Victory" title="Heavy Attack [K]">✌️ Heavy [K]</div>
-            <div class="sign-badge" data-sign="Open_Palm" title="Block Guard [L]">✋ Block [L]</div>
-            <div class="sign-badge" data-sign="Pointing_Up" title="Move Forward [I]">☝️ Fwd [I]</div>
-            <div class="sign-badge" data-sign="Thumb_Up" title="Move Back [O]">👍 Back [O]</div>
-            <div class="sign-badge" data-sign="ILoveYou" title="Special Overdrive [P]">🤟 Super [P]</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main Canvas Viewport -->
-      <div class="canvas-viewport" id="canvas-viewport">
-        <canvas id="fight-canvas" width="1280" height="720"></canvas>
-        <div class="slowmo-overlay" id="slowmo-overlay"></div>
-
-        <!-- Live Mirrored Webcam Picture-in-Picture -->
-        <div id="pip-container" class="pip-container">
-          <canvas id="pip-webcam-canvas" width="220" height="165"></canvas>
-          <div class="pip-label">LIVE WEBCAM MIRROR</div>
-        </div>
-      </div>
-
-      <!-- Quick Arena Controls -->
-      <div class="arena-quick-controls">
-        <button id="btn-restart-fight" class="mini-btn">🔄 Restart Duel</button>
       </div>
     </section>
 
@@ -575,13 +652,13 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="audio.js"></script>
-  <script src="weapons.js"></script>
-  <script src="hand-input.js"></script>
-  <script src="gestures.js"></script>
-  <script src="stickman.js"></script>
-  <script src="arena.js"></script>
-  <script src="leaderboard.js"></script>
-  <script src="game.js"></script>
+  <script src="audio.js?v=6"></script>
+  <script src="weapons.js?v=6"></script>
+  <script src="hand-input.js?v=6"></script>
+  <script src="gestures.js?v=6"></script>
+  <script src="stickman.js?v=6"></script>
+  <script src="arena.js?v=6"></script>
+  <script src="leaderboard.js?v=6"></script>
+  <script src="game.js?v=6"></script>
 </body>
 </html>

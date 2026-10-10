@@ -186,6 +186,40 @@ class GameApp {
       });
     }
 
+    // Cam Dock Switch (dock between Right and Left sidebar)
+    const camDockToggleBtn = document.getElementById('btn-dock-toggle');
+    if (camDockToggleBtn) {
+      camDockToggleBtn.addEventListener('click', () => {
+        const pipBox = document.getElementById('pip-container');
+        const sidebarP1 = document.getElementById('arena-sidebar-p1');
+        const sidebarP2 = document.getElementById('arena-sidebar-p2');
+        const arenaLayout = document.querySelector('.arena-battlefield-layout');
+        if (!pipBox || !sidebarP1 || !sidebarP2) return;
+
+        if (sidebarP2.contains(pipBox)) {
+          // Move to P1 sidebar above alert
+          const p1Alert = document.getElementById('p1-hand-alert');
+          if (p1Alert) {
+            sidebarP1.insertBefore(pipBox, p1Alert);
+          } else {
+            sidebarP1.appendChild(pipBox);
+          }
+          camDockToggleBtn.innerText = '⇋ Dock Right';
+          if (arenaLayout) arenaLayout.classList.add('dock-left');
+        } else {
+          // Move back to P2 sidebar above alert
+          const p2Alert = document.getElementById('p2-hand-alert');
+          if (p2Alert) {
+            sidebarP2.insertBefore(pipBox, p2Alert);
+          } else {
+            sidebarP2.appendChild(pipBox);
+          }
+          camDockToggleBtn.innerText = '⇋ Dock Left';
+          if (arenaLayout) arenaLayout.classList.remove('dock-left');
+        }
+      });
+    }
+
     // Screen 5: Rematch & New Match
     const rematchBtn = document.getElementById('btn-rematch');
     if (rematchBtn) {
@@ -466,6 +500,17 @@ class GameApp {
     this.initFighters();
     this.updatePipPlayerHUD();
 
+    // Ensure camera canvas is calibrated for Section 2 camera console
+    if (this.pipCanvas) {
+      this.pipCanvas.width = 640;
+      this.pipCanvas.height = 360;
+    }
+    const pipBox = document.getElementById('pip-container');
+    if (pipBox) {
+      pipBox.style.width = '';
+      pipBox.style.height = '';
+    }
+
     // Reset Sudden Death
     this.tied44Timestamp = 0;
     this.isSuddenDeath = false;
@@ -527,17 +572,21 @@ class GameApp {
     const p1NameEl = document.getElementById('hud-p1-name');
     const p1DeptEl = document.getElementById('hud-p1-dept');
     const p1WeapEl = document.getElementById('hud-p1-weapon');
+    const stripP1 = document.getElementById('strip-p1-name');
     if (p1NameEl) p1NameEl.innerText = this.p1.name;
     if (p1DeptEl) p1DeptEl.innerText = this.p1.dept;
     if (p1WeapEl && this.fighter1) p1WeapEl.innerText = this.fighter1.weapon.name;
+    if (stripP1) stripP1.innerText = `P1 ${this.p1.name.toUpperCase()}`;
 
     // P2 HUD
     const p2NameEl = document.getElementById('hud-p2-name');
     const p2DeptEl = document.getElementById('hud-p2-dept');
     const p2WeapEl = document.getElementById('hud-p2-weapon');
+    const stripP2 = document.getElementById('strip-p2-name');
     if (p2NameEl) p2NameEl.innerText = this.p2.name;
     if (p2DeptEl) p2DeptEl.innerText = this.p2.dept;
     if (p2WeapEl && this.fighter2) p2WeapEl.innerText = this.fighter2.weapon.name;
+    if (stripP2) stripP2.innerText = `${this.p2.name.toUpperCase()} P2`;
   }
 
   startFightLoop() {
@@ -663,12 +712,31 @@ class GameApp {
       }
     });
 
-    // Special meter bars (0 to 100%)
+    // Numerical Stamina Counters (5 / 5 down to 0 / 5)
+    const p1StaminaCount = document.getElementById('p1-stamina-count');
+    if (p1StaminaCount && this.fighter1) {
+      p1StaminaCount.innerText = `${Math.max(0, 5 - this.fighter1.hitsTaken)} / 5`;
+    }
+
+    const p2StaminaCount = document.getElementById('p2-stamina-count');
+    if (p2StaminaCount && this.fighter2) {
+      p2StaminaCount.innerText = `${Math.max(0, 5 - this.fighter2.hitsTaken)} / 5`;
+    }
+
+    // Special meter bars & percentage labels (0 to 100%)
     const p1SpecialFill = document.getElementById('p1-special-fill');
     if (p1SpecialFill) p1SpecialFill.style.width = `${this.fighter1.specialMeter}%`;
+    const p1SpecialNum = document.getElementById('p1-special-num');
+    if (p1SpecialNum && this.fighter1) {
+      p1SpecialNum.innerText = `${Math.round(this.fighter1.specialMeter)}%`;
+    }
 
     const p2SpecialFill = document.getElementById('p2-special-fill');
     if (p2SpecialFill) p2SpecialFill.style.width = `${this.fighter2.specialMeter}%`;
+    const p2SpecialNum = document.getElementById('p2-special-num');
+    if (p2SpecialNum && this.fighter2) {
+      p2SpecialNum.innerText = `${Math.round(this.fighter2.specialMeter)}%`;
+    }
   }
 
   // ================= 4. MATCH FINISH & VICTORY =================
